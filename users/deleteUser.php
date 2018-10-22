@@ -1,5 +1,5 @@
 <?php
-require_once "config/functions.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/config/functions.php";
 
 if(isset($_GET['id'])) {
     $id = $_GET['id'];
@@ -18,4 +18,4 @@ if(isset($_GET['id'])) {
     }
 }
 
-header("Location: /");
+header("Location: /users");

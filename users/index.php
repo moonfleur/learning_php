@@ -1,5 +1,5 @@
 <?php
-require_once 'config/functions.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/config/functions.php';
 //$usernames = ["Zaya", "Козявка", "Какашка", "Какашіще", "ЗАКАШУЛЬКА"];
 //
 //
@@ -35,6 +35,6 @@ if(isset($_COOKIE['message'])) {
 }
 
 $title = "Користувачі";
-$page_view = "views/pages/home_view.php";
-require 'views/layout/default.php';
+$page_view = $_SERVER['DOCUMENT_ROOT'] . "/views/pages/home_view.php";
+require $_SERVER['DOCUMENT_ROOT'] . '/views/layout/default.php';
 

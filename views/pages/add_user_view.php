@@ -5,7 +5,7 @@
         </div>
     <?php endif; ?>
     <div class="row">
-        <form action="/saveUser.php" method="post">
+        <form action="/users/saveUser.php" method="post">
             <div class="form-group">
                 <label for="login">Логін</label>
                 <input type="text" class="form-control" id="login" name="login" placeholder="Логін">

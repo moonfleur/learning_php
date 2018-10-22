@@ -23,8 +23,8 @@
                     <th><?= $users[$i]['user_name'] ?></th>
                     <th><?= $users[$i]['email'] ?></th>
                     <th><?= $users[$i]['created_at'] ?></th>
-                    <th><a href="/editUser.php?id=<?= $users[$i]['id'] ?>" class="btn btn-warning btn-sm">Редагувати</a></th>
-                    <th><a href="/deleteUser.php?id=<?= $users[$i]['id'] ?>" class="btn btn-danger btn-sm">Видалити</a></th>
+                    <th><a href="/users/editUser.php?id=<?= $users[$i]['id'] ?>" class="btn btn-warning btn-sm">Редагувати</a></th>
+                    <th><a href="/users/deleteUser.php?id=<?= $users[$i]['id'] ?>" class="btn btn-danger btn-sm">Видалити</a></th>
                 </tr>
 
             <?php endfor; ?>

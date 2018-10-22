@@ -1,5 +1,5 @@
 <?php
-require_once "config/functions.php";
+require_once  $_SERVER['DOCUMENT_ROOT'] . "/config/functions.php";
 
 if ($_SERVER['REQUEST_METHOD'] == "POST" && !empty($_POST)) {
 
@@ -40,8 +40,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && !empty($_POST)) {
         }
     }
 
-    header('Location: /addUser.php');
+    header('Location: /users/addUser.php');
 } else {
     setcookie('message', 'На сторінку saveUser.php не можна зайти методом GET!');
-    header('Location: /');
+    header('Location: /users');
 }

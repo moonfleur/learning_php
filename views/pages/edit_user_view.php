@@ -5,7 +5,7 @@
         </div>
     <?php endif; ?>
     <div class="row">
-        <form action="/updateUser.php" method="post">
+        <form action="/users/updateUser.php" method="post">
             <input type="hidden" value="<?= $user_data['id'] ?>" name="user_id">
             <div class="form-group">
                 <label for="login">Логін</label>

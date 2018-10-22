@@ -1,5 +1,5 @@
 <?php
-require_once "config/functions.php";
+require_once $_SERVER['DOCUMENT_ROOT'] ."/config/functions.php";
 
 $user_id = $_GET['id'];
 
@@ -19,5 +19,5 @@ if(isset($_COOKIE['message'])) {
 }
 
 $title = "Редагування користувача";
-$page_view = "views/pages/edit_user_view.php";
-require 'views/layout/default.php';
+$page_view =  $_SERVER['DOCUMENT_ROOT'] . "/views/pages/edit_user_view.php";
+require $_SERVER['DOCUMENT_ROOT'] . '/views/layout/default.php';
