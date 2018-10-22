@@ -29,7 +29,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && !empty($_POST)) {
 
     if(empty($errors)) {
         $link = connectDB();
-        $query = "INSERT INTO users (user_name, email, password, role) VALUES('$login', '$email', md5($password), '$role');";
+        $query = "INSERT INTO users (user_name, email, password, role) VALUES('$login', '$email', md5('$password'), '$role');";
+
         $result = mysqli_query($link, $query) or die("Ошибка " . mysqli_error($link));
         disconnectDB($link);
 
