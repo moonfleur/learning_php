@@ -1,10 +1,9 @@
-<?php if(isset($message)) : ?>
-    <div class="alert alert-success" role="alert">
-        <?=$message?>
-    </div>
-<?php endif; ?>
-
 <div class="container">
+    <?php if(isset($message)) : ?>
+        <div class="alert alert-warning" role="alert">
+            <?=$message?>
+        </div>
+    <?php endif; ?>
     <div class="row">
         <table class="table table-striped table-dark">
             <thead>
@@ -14,6 +13,7 @@
                 <th scope="col">E-mail</th>
                 <th scope="col">Created date</th>
                 <th scope="col">Редагувати</th>
+                <th scope="col">Видалити</th>
             </tr>
             </thead>
             <tbody>
@@ -24,6 +24,7 @@
                     <th><?= $users[$i]['email'] ?></th>
                     <th><?= $users[$i]['created_at'] ?></th>
                     <th><a href="/editUser.php?id=<?= $users[$i]['id'] ?>" class="btn btn-warning btn-sm">Редагувати</a></th>
+                    <th><a href="/deleteUser.php?id=<?= $users[$i]['id'] ?>" class="btn btn-danger btn-sm">Видалити</a></th>
                 </tr>
 
             <?php endfor; ?>
