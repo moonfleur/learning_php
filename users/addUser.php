@@ -13,5 +13,5 @@ if(isset($_COOKIE['message'])) {
 
 
 $title = "Додавання нового користувача";
-$page_view =  $_SERVER['DOCUMENT_ROOT'] . "/views/pages/add_user_view.php";
+$page_view =  $_SERVER['DOCUMENT_ROOT'] . "/views/pages/users/add_user_view.php";
 require  $_SERVER['DOCUMENT_ROOT'] . '/views/layout/default.php';

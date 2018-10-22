@@ -19,5 +19,5 @@ if(isset($_COOKIE['message'])) {
 }
 
 $title = "Редагування користувача";
-$page_view =  $_SERVER['DOCUMENT_ROOT'] . "/views/pages/edit_user_view.php";
+$page_view =  $_SERVER['DOCUMENT_ROOT'] . "/views/pages/users/edit_user_view.php";
 require $_SERVER['DOCUMENT_ROOT'] . '/views/layout/default.php';

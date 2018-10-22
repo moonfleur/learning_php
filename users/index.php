@@ -35,6 +35,6 @@ if(isset($_COOKIE['message'])) {
 }
 
 $title = "Користувачі";
-$page_view = $_SERVER['DOCUMENT_ROOT'] . "/views/pages/home_view.php";
+$page_view = $_SERVER['DOCUMENT_ROOT'] . "/views/pages/users/list.php";
 require $_SERVER['DOCUMENT_ROOT'] . '/views/layout/default.php';
 
