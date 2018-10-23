@@ -1,7 +1,22 @@
 <?php
 require_once  $_SERVER['DOCUMENT_ROOT'] . "/config/functions.php";
+$messages = [];
+$errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] == "POST" && !empty($_POST)) {
+    if(isset($_POST['user_id']) && !empty($_POST['user_id'])){
+        $user_id = $_POST['user_id'];
+    } else {
+        $errors['user_id'] = 'Не вказано id користувача!';
+    }
+
+    if(!
+        (
+            isset($_SESSION['this_user'])
+            && ($_SESSION['this_user']['role'] == 1 || $_SESSION['this_user']['id'] == $user_id)
+
+        )
+    ) header('Location: /users');
 
     if(isset($_POST['login']) && !empty($_POST['login'])){
         $login = $_POST['login'];
@@ -13,12 +28,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && !empty($_POST)) {
         $email = $_POST['email'];
     } else {
         $errors['email_field'] = 'Поле "Email" не заповнене!';
-    }
-
-    if(isset($_POST['user_id']) && !empty($_POST['user_id'])){
-        $user_id = $_POST['user_id'];
-    } else {
-        $errors['user_id'] = 'Не вказано id користувача!';
     }
 
     if(isset($_POST['password']) && !empty($_POST['password'])){
@@ -43,14 +52,36 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && !empty($_POST)) {
         disconnectDB($link);
 
         if($result) {
-            setcookie('message', 'Дані користувача успішно оновлені!');
+            if(isset($password) && $_SESSION['this_user']['id'] == $user_id) {
+                $_SESSION['this_user']['password'] = md5($password);
+            }
+            $messages[] = [
+                'status' => 'success',
+                'text' => 'Дані користувача успішно оновлені!'
+            ];
         } else {
-            setcookie('message', 'Дані користувача не оновлені!!');
+            $messages[] = [
+                'status' => 'error',
+                'text' => 'ані користувача не оновлені!'
+            ];
         }
+    } else {
+        $messages[] = [
+            'status' => 'error',
+            'text' => 'Виправте помилки!'
+        ];
+
+        setcookie('errors', json_encode($errors));
     }
+
+    setcookie('messages', json_encode($messages));
 
     header("Location: /users/editUser.php?id=$user_id");
 } else {
-    setcookie('message', 'На сторінку saveUser.php не можна зайти методом GET!');
+    $messages[] = [
+        'status' => 'error',
+        'text' => 'На сторінку updateUser.php не можна зайти методом GET!'
+    ];
+    setcookie('messages', json_encode($messages));
     header('Location: /users');
 }

@@ -1,5 +1,8 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/config/functions.php';
+if(!isset($_SESSION['this_user'])) header('Location: /');
+
+$messages = [];
 //$usernames = ["Zaya", "Козявка", "Какашка", "Какашіще", "ЗАКАШУЛЬКА"];
 //
 //
@@ -29,9 +32,18 @@ disconnectDB($link);
 //    var_dump($row);
 //}
 
-if(isset($_COOKIE['message'])) {
-    $message = $_COOKIE['message'];
-    setcookie('message', "", time());
+if(isset($_COOKIE['errors'])) {
+    $errors = json_decode($_COOKIE['errors'], true);
+    setcookie('errors', "", time());
+}
+
+if(isset($_COOKIE['messages'])) {
+    $messages = json_decode($_COOKIE['messages'], true);
+    setcookie('messages', "", time());
+}
+if(isset($_COOKIE['old_values'])) {
+    $old_values = json_decode($_COOKIE['old_values'], true);
+    setcookie('old_values', "", time());
 }
 
 $title = "Користувачі";

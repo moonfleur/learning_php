@@ -1,7 +1,16 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] ."/config/functions.php";
-
 $user_id = $_GET['id'];
+
+if(!
+    (
+        isset($_SESSION['this_user'])
+        && ($_SESSION['this_user']['role'] == 1 || $_SESSION['this_user']['id'] == $user_id)
+
+    )
+) header('Location: /users');
+
+$messages = [];
 
 $link = connectDB();
 
@@ -13,9 +22,9 @@ $result = mysqli_query($link, $query) or die("Ошибка " . mysqli_error($lin
 $user_data = mysqli_fetch_assoc($result);
 disconnectDB($link);
 
-if(isset($_COOKIE['message'])) {
-    $message = $_COOKIE['message'];
-    setcookie('message', "", time());
+if(isset($_COOKIE['messages'])) {
+    $messages = json_decode($_COOKIE['messages'], true);
+    setcookie('messages', "", time());
 }
 
 $title = "Редагування користувача";

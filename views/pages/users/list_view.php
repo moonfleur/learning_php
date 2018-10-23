@@ -1,9 +1,4 @@
 <div class="container">
-    <?php if(isset($message)) : ?>
-        <div class="alert alert-warning" role="alert">
-            <?=$message?>
-        </div>
-    <?php endif; ?>
     <div class="row">
         <table class="table table-striped table-dark">
             <thead>

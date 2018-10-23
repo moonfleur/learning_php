@@ -1,14 +1,4 @@
 <div class="container">
-    <div class="row">
-        <?php if(!empty($messages)) : ?>
-            <?php foreach ($messages as $message) : ?>
-                <div class="w-100 alert <?php if ($message['status'] == 'success') echo 'alert-success'; else echo 'alert-danger'; ?>" role="alert">
-                    <?= $message['message'] ?>
-                </div>
-            <?php endforeach; ?>
-        <?php endif; ?>
-    </div>
-
     <form class="form-horizontal" role="form" method="POST" action="/users/registration.php">
         <div class="row">
             <div class="col-md-3 field-label-responsive">

@@ -1,9 +1,6 @@
+<!--TODO: Переробити як на сторінці реєстрації! -->
+
 <div class="container">
-    <?php if(isset($message)) : ?>
-        <div class="alert alert-success" role="alert">
-            <?=$message?>
-        </div>
-    <?php endif; ?>
     <div class="row">
         <form action="/users/updateUser.php" method="post">
             <input type="hidden" value="<?= $user_data['id'] ?>" name="user_id">

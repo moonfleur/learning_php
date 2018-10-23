@@ -1,5 +1,8 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . "/config/functions.php";
+if(!(isset($_SESSION['this_user']) && $_SESSION['this_user']['role'] == 1)) header('Location: /');
+
+$messages = [];
 
 if(isset($_GET['id'])) {
     $id = $_GET['id'];
@@ -12,10 +15,17 @@ if(isset($_GET['id'])) {
     disconnectDB($link);
 
     if($result) {
-        setcookie('message', 'Користувач успішно видалений!');
+        $messages[] = [
+            'status' => 'success',
+            'text' => 'Користувач успішно видалений!'
+        ];
     } else {
-        setcookie('message', 'Користувач не видалений!');
+        $messages[] = [
+            'status' => 'error',
+            'text' => 'Користувач не видалений!'
+        ];
     }
+    setcookie('messages', json_encode($messages));
 }
 
 header("Location: /users");
