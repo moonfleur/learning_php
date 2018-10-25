@@ -22,6 +22,10 @@ $result = mysqli_query($link, $query) or die("Ошибка " . mysqli_error($lin
 $user_data = mysqli_fetch_assoc($result);
 disconnectDB($link);
 
+if(isset($_COOKIE['errors'])) {
+    $errors = json_decode($_COOKIE['errors'], true);
+    setcookie('errors', "", time());
+}
 if(isset($_COOKIE['messages'])) {
     $messages = json_decode($_COOKIE['messages'], true);
     setcookie('messages', "", time());

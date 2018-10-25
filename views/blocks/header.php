@@ -3,7 +3,7 @@
     <div class="row mb-1 d-flex justify-content-between">
         <div class="col-6">
             <a href="/" class="btn btn-primary mr-1">Головна</a>
-            <?php if(isset($_SESSION['this_user'])) : ?>
+            <?php if(isset($_SESSION['this_user']) && $_SESSION['this_user']['role'] == 1) : ?>
                 <a href="/users" class="btn btn-primary mr-1">Користувачі</a>
                 <a href="/users/addUser.php" class="btn btn-primary mr-1">Додати нового користувача</a>
             <?php endif; ?>

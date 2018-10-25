@@ -14,7 +14,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && !empty($_POST)) {
         (
             isset($_SESSION['this_user'])
             && ($_SESSION['this_user']['role'] == 1 || $_SESSION['this_user']['id'] == $user_id)
-
         )
     ) header('Location: /users');
 
@@ -34,49 +33,76 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && !empty($_POST)) {
         $password = $_POST['password'];
     }
 
-    if(isset($_POST['role']) && !empty($_POST['role']) && $_POST['role'] != 0){
-        $role = $_POST['role'];
-    } else {
-        $errors['role_field'] = 'Поле "Роль" не заповнене!';
-    }
+    $link = connectDB();
 
-    if(empty($errors)) {
-        $link = connectDB();
-        if(isset($password)) {
-            $query = "UPDATE users SET user_name = '$login', email = '$email', role = '$role', password = md5('$password') WHERE id = '$user_id';";
+    $query = "SELECT * FROM users WHERE id = {$user_id};";
+    $result = mysqli_query($link, $query) or die("Ошибка " . mysqli_error($link));
+    $user_data = mysqli_fetch_assoc($result);
+
+    if($user_data) {
+        if ($_SESSION['this_user']['role'] == 1) {
+            if(
+                isset($_POST['role'])
+                && !empty($_POST['role'])
+                && $_POST['role'] != 0
+            ) {
+                $role = $_POST['role'];
+            } else {
+                $errors['role_field'] = 'Поле "Роль" не заповнене!';
+            }
+        } elseif(
+            isset($_POST['role'])
+            && !empty($_POST['role'])
+            && $_POST['role'] != 0
+        ) {
+            $errors['role_field'] = 'Недостатньо прав для зміни ролі!';
         } else {
-            $query = "UPDATE users SET user_name = '$login', email = '$email', role = '$role' WHERE id = '$user_id';";
+            $role = $user_data['role'];
         }
 
-        $result = mysqli_query($link, $query) or die("Ошибка " . mysqli_error($link));
-        disconnectDB($link);
-
-        if($result) {
-            if(isset($password) && $_SESSION['this_user']['id'] == $user_id) {
-                $_SESSION['this_user']['password'] = md5($password);
+        if(empty($errors)) {
+            if(isset($password)) {
+                $query = "UPDATE users SET user_name = '$login', email = '$email', role = '$role', password = md5('$password') WHERE id = '$user_id';";
+            } else {
+                $query = "UPDATE users SET user_name = '$login', email = '$email', role = '$role' WHERE id = '$user_id';";
             }
-            $messages[] = [
-                'status' => 'success',
-                'text' => 'Дані користувача успішно оновлені!'
-            ];
+
+            mysqli_query($link, $query) or die("Ошибка " . mysqli_error($link));
+
+            if(mysqli_affected_rows($link)) {
+                if(isset($password) && $_SESSION['this_user']['id'] == $user_id) {
+                    $_SESSION['this_user']['password'] = md5($password);
+                }
+                $messages[] = [
+                    'status' => 'success',
+                    'text' => 'Дані користувача успішно оновлені!'
+                ];
+            } else {
+                $messages[] = [
+                    'status' => 'error',
+                    'text' => 'Дані користувача не оновлені!'
+                ];
+            }
         } else {
             $messages[] = [
                 'status' => 'error',
-                'text' => 'ані користувача не оновлені!'
+                'text' => 'Виправте помилки!'
             ];
+
+            setcookie('errors', json_encode($errors));
         }
     } else {
         $messages[] = [
             'status' => 'error',
-            'text' => 'Виправте помилки!'
+            'text' => 'Користувача не знайдено в базі даних!'
         ];
-
-        setcookie('errors', json_encode($errors));
     }
+
+    disconnectDB($link);
 
     setcookie('messages', json_encode($messages));
 
-    header("Location: /users/editUser.php?id=$user_id");
+    header("Location: " . $_SERVER['HTTP_REFERER']);
 } else {
     $messages[] = [
         'status' => 'error',

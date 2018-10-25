@@ -1,6 +1,6 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/config/functions.php';
-if(!isset($_SESSION['this_user'])) header('Location: /');
+if(!(isset($_SESSION['this_user']) && $_SESSION['this_user']['role'] == 1)) header('Location: /');
 
 $messages = [];
 //$usernames = ["Zaya", "Козявка", "Какашка", "Какашіще", "ЗАКАШУЛЬКА"];
