@@ -26,14 +26,13 @@ function checkUser() {
 
         $user = mysqli_fetch_assoc($result);
 
-        if($user != null) {
-            if($password != $user['password']) {
-                unset($_SESSION['this_user']);
-                header('Location: /');
-            } else {
-                $_SESSION['this_user'] = $user;
-            }
+        if($user == null || $password != $user['password']) {
+            unset($_SESSION['this_user']);
+            header('Location: /');
+        } else {
+            $_SESSION['this_user'] = $user;
         }
+        disconnectDB($link);
     }
 }
 
