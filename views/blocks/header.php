@@ -7,6 +7,9 @@
                 <a href="/users" class="btn btn-primary mr-1">Користувачі</a>
                 <a href="/users/addUser.php" class="btn btn-primary mr-1">Додати нового користувача</a>
             <?php endif; ?>
+            <?php if(isset($_SESSION['this_user']) && ($_SESSION['this_user']['role'] == 1 || $_SESSION['this_user']['role'] == 2)) :?>
+                <a href="/articles/addArticle.php" class="btn btn-primary mr-1">Додати нову статтю</a>
+            <?php endif; ?>
         </div>
         <div class="col-3 text-right">
             <?php if(isset($_SESSION['this_user'])) : ?>
